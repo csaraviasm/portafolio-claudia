@@ -90,3 +90,50 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 }
+
+/*
+ * Estilos del texto que se escribe en el editor enriquecido del panel
+ * (contenido de proyectos y biografía). Da formato automático a párrafos,
+ * títulos, listas y enlaces sin tener que pensar en clases.
+ */
+@layer components {
+  .prose-portafolio :is(h2) {
+    @apply mt-10 mb-3 text-2xl font-extrabold tracking-tight first:mt-0;
+  }
+
+  .prose-portafolio :is(h3) {
+    @apply mt-8 mb-2 text-lg font-semibold;
+  }
+
+  .prose-portafolio :is(p) {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose-portafolio :is(ul, ol) {
+    @apply mb-4 ml-5 space-y-1.5;
+  }
+
+  .prose-portafolio :is(ul) {
+    @apply list-disc;
+  }
+
+  .prose-portafolio :is(ol) {
+    @apply list-decimal;
+  }
+
+  .prose-portafolio :is(a) {
+    @apply text-primary underline underline-offset-2;
+  }
+
+  .prose-portafolio :is(strong) {
+    @apply font-semibold;
+  }
+
+  .prose-portafolio :is(blockquote) {
+    @apply border-accent text-muted-foreground my-6 border-l-2 pl-4 italic;
+  }
+
+  .prose-portafolio :is(img) {
+    @apply my-6 rounded-xl;
+  }
+}
