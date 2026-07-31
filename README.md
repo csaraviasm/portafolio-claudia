@@ -139,6 +139,12 @@ Si estás retomando este proyecto (Claude, ChatGPT, u otro modelo), esto es lo q
 
 - [x] Sitio estático multi-página con i18n ES/EN
 - [x] Deploy a producción (Vercel)
-- [ ] Dominio propio conectado (Hostinger → Vercel)
+- [x] Dominio propio conectado (Hostinger → Vercel)
+- [x] Correo del dominio (`hey@claudiasaravia.com`) enlazado a Gmail
+- [ ] Favicon y metadatos Open Graph
 - [ ] Migración a Next.js + Payload CMS (contenido editable sin tocar código)
+- [ ] Páginas de detalle por proyecto
 - [ ] Panel de administración para proyectos/experiencia/skills
+
+El plan detallado de la Fase 2 (stack, colecciones, etapas y riesgos) está en
+[`ARQUITECTURA.md`](./ARQUITECTURA.md).

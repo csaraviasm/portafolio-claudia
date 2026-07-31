@@ -1,5 +1,11 @@
 .DS_Store
 node_modules/
 .env
+.env.local
 .vercel
 .deploy_tmp/
+
+# Borradores y notas operativas fuera del sitio
+portfolio.html
+status-panel.html
+enlazar-correo-gmail.md
