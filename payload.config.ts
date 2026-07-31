@@ -1,4 +1,5 @@
 import path from 'path'
+import { createHash } from 'crypto'
 import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
@@ -23,6 +24,35 @@ import { Ajustes } from './globals/Ajustes'
 import { Marca } from './globals/Marca'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
+
+/**
+ * Clave con la que Payload firma las sesiones del panel.
+ *
+ * Se usa `PAYLOAD_SECRET` si está definida. Si no, se deriva de la cadena de
+ * conexión de la base de datos, que ya es un valor secreto, estable y disponible
+ * en todos los entornos. Así el proyecto arranca sin configuración adicional.
+ *
+ * Consecuencia a tener en cuenta: si algún día cambia la base de datos sin que
+ * exista `PAYLOAD_SECRET`, las sesiones abiertas del panel se cierran y hay que
+ * volver a iniciar sesión. No se pierde ningún dato.
+ */
+function obtenerSecret(): string {
+  const explicito = process.env.PAYLOAD_SECRET
+
+  if (typeof explicito === 'string' && explicito.length >= 16) {
+    return explicito
+  }
+
+  const derivado = process.env.DATABASE_URL
+
+  if (typeof derivado === 'string' && derivado.length >= 16) {
+    return createHash('sha256').update(`payload:${derivado}`).digest('hex')
+  }
+
+  throw new Error(
+    'No se pudo determinar la clave de Payload: falta PAYLOAD_SECRET y DATABASE_URL.',
+  )
+}
 
 export default buildConfig({
   // ── Panel de administración ─────────────────────────────────────────────
@@ -72,7 +102,7 @@ export default buildConfig({
     }),
   ],
 
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: obtenerSecret(),
 
   // Tipos TypeScript generados a partir de las colecciones.
   // Se regeneran con: npm run generate:types
