@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyectos — Claudia Saravia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="no-scroll">
+
+<header>
+  <nav>
+    <div class="logo">Claudia<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.inicio">Inicio</a></li>
+      <li><a href="proyectos.html" data-i18n="nav.proyectos">Proyectos</a></li>
+      <li><a href="sobre-mi.html" data-i18n="nav.sobre">Sobre mí</a></li>
+      <li><a href="contacto.html" data-i18n="nav.contacto">Contacto</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button data-lang="es">ES</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <a href="assets/CV-Claudia-Saravia.pdf" download class="nav-cta" data-i18n="nav.cv">Descargar CV</a>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero-split">
+    <div class="wrap">
+      <div class="split-shell full reveal">
+        <div class="split-card">
+          <span class="eyebrow" data-i18n="projects.eyebrow">Proyectos</span>
+          <h2 class="section-title" data-i18n="projects.title">Trabajo seleccionado</h2>
+          <p class="section-sub body-sm" data-i18n="projects.sub">Casos reales de mi experiencia diseñando producto digital, de 0 a 1 y en optimización continua.</p>
+
+          <div class="projects-grid">
+            <!-- LOTOBOLA -->
+            <div class="project-card" id="proyecto-lotobola">
+              <div class="project-thumb thumb-1"></div>
+              <div class="project-body">
+                <div class="project-badges">
+                  <span class="badge-pill">2025</span>
+                  <span class="badge-pill badge-outline" data-i18n="p1.tag1">Product Design</span>
+                </div>
+                <h3 data-i18n="p1.title">Lotobola — Producto digital desde cero</h3>
+              </div>
+            </div>
+
+            <!-- INLEARNING UI DESIGNER -->
+            <div class="project-card" id="proyecto-inlearning-ui">
+              <div class="project-thumb thumb-2"></div>
+              <div class="project-body">
+                <div class="project-badges">
+                  <span class="badge-pill">2024</span>
+                  <span class="badge-pill badge-outline" data-i18n="p2.tag1">Design System</span>
+                </div>
+                <h3 data-i18n="p2.title">InLearning (Intercorp) — Optimización de trámites educativos</h3>
+              </div>
+            </div>
+
+            <!-- INLEARNING VISUAL / PRACTICANTE -->
+            <div class="project-card" id="proyecto-inlearning-visual">
+              <div class="project-thumb thumb-3"></div>
+              <div class="project-body">
+                <div class="project-badges">
+                  <span class="badge-pill">2022–23</span>
+                  <span class="badge-pill badge-outline" data-i18n="p3.tag1">Visual Design</span>
+                </div>
+                <h3 data-i18n="p3.title">InLearning (Intercorp) — De practicante a Product Designer</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div data-i18n="footer.text">© 2026 Claudia Saravia Matias — UX/UI Designer, Lima, Perú.</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
