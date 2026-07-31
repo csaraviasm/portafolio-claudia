@@ -79,14 +79,32 @@ Consecuencias prácticas:
 
 | Capa | Elección | Por qué |
 |---|---|---|
-| Framework | Next.js (App Router) | Requisito de Payload 3; mismo hosting que ya usas |
+| Framework | Next.js (App Router) + React 19 | Requisito de Payload 3; mismo hosting que ya usas |
 | CMS | Payload 3 | Panel de admin incluido, se instala en el mismo proyecto |
+| Estilos | Tailwind CSS v4 | Estándar de la industria, sin CSS suelto que mantener |
+| Componentes | shadcn/ui | El código de cada componente entra en tu repo y lo puedes editar |
+| Iconos | lucide-react | Set consistente, importación individual, sin peso muerto |
 | Base de datos | Postgres en Neon | Plan gratuito, integración nativa con Vercel, escala a cero |
 | Almacenamiento de archivos | Vercel Blob | Imágenes y PDFs subidos desde el panel |
 | Hosting | Vercel (mismo proyecto) | Ya configurado, deploy automático desde `main` |
-| Estilos | CSS actual, migrado | Se conservan las variables y convenciones existentes |
+| Lenguaje | TypeScript | Payload genera tipos de tus colecciones: el editor avisa de errores antes de ejecutar |
 
 Todo el stack tiene plan gratuito suficiente para un portafolio personal.
+
+**Por qué shadcn/ui y no una librería de componentes tradicional.**
+shadcn/ui no se instala como dependencia: al añadir un componente, su código fuente se
+copia a `components/ui/` dentro de tu repositorio. Es tuyo y lo puedes modificar línea
+a línea. No hay que pelearse con los estilos de una librería ajena ni esperar a que
+sus mantenedores acepten un cambio. Para un portafolio de diseñadora —donde el
+detalle visual es el argumento de venta— esto es la diferencia entre poder ejecutar
+tus propuestas o tener que adaptarlas a lo que la librería permite.
+
+**Los tokens de diseño están conectados.**
+Los colores del sitio actual (`--accent: #2347f2`, `--accent-2: #ea6a55`, etc.) ya están
+traducidos al formato que consumen los componentes de shadcn, en
+`app/(frontend)/globals.css`. Consecuencia práctica: cualquier componente que instales
+sale con tu identidad visual desde el primer render, sin retoques. Y si un día cambias
+la paleta, se edita un solo bloque y cambia el sitio entero.
 
 ### 2.4 Cómo se organiza el contenido en el panel
 
@@ -234,17 +252,24 @@ páginas y cualquier funcionalidad nueva. Que es exactamente el reparto que busc
 │   ├── Contacto.ts
 │   └── Ajustes.ts
 │
-├── components/                   # Piezas visuales reutilizables
+├── components/
+│   ├── ui/                       # Componentes de shadcn — código editable, es tuyo
 │   ├── Header.tsx
 │   ├── ProjectCard.tsx
 │   └── ...
 │
-├── styles/
-│   └── globals.css               # El style.css actual, migrado
+├── lib/
+│   ├── utils.ts                  # Utilidad `cn()` que usan los componentes
+│   └── metadata.ts               # Favicon y vista previa social, leídos del panel
 │
 ├── payload.config.ts             # Configuración central del CMS
+├── components.json               # Configuración de shadcn
 └── package.json
 ```
+
+Los estilos no viven en una carpeta aparte: los tokens están en
+`app/(frontend)/globals.css` y el resto se escribe con clases de Tailwind
+directamente en cada componente.
 
 **Regla de oro para mantener esto ordenado:**
 si es *contenido*, va en el panel. Si es *comportamiento o apariencia*, va en el código.

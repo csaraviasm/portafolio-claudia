@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/*
+ * Tokens de diseño del portafolio.
+ *
+ * Estos valores vienen del sitio actual (style.css) y son la fuente de verdad
+ * de color y tipografía. Los componentes de shadcn/ui los consumen
+ * automáticamente, así que cualquier componente que instales sale con la
+ * identidad correcta sin tener que retocarlo.
+ *
+ * Para cambiar la paleta del sitio entero: edita solo este bloque.
+ */
+
+:root {
+  --radius: 0.75rem;
+
+  /* Superficies */
+  --background: hsl(60 11% 96%); /* #f7f7f5 — fondo general */
+  --foreground: hsl(240 6% 10%); /* #17171a — texto principal */
+  --card: hsl(0 0% 100%); /* #ffffff — tarjetas */
+  --card-foreground: hsl(240 6% 10%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(240 6% 10%);
+
+  /* Azul primario — botones y enlaces activos */
+  --primary: hsl(230 89% 54%); /* #2347f2 */
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Coral — acentos y etiquetas superiores */
+  --accent: hsl(8 78% 63%); /* #ea6a55 */
+  --accent-foreground: hsl(0 0% 100%);
+
+  /* Neutros */
+  --secondary: hsl(60 9% 92%);
+  --secondary-foreground: hsl(240 6% 10%);
+  --muted: hsl(60 9% 92%);
+  --muted-foreground: hsl(240 4% 44%); /* #6b6b74 — texto secundario */
+
+  --destructive: hsl(0 72% 51%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  --border: hsl(60 9% 89%); /* #e5e5e0 */
+  --input: hsl(60 9% 89%);
+  --ring: hsl(230 89% 54%);
+}
+
+/*
+ * Puente entre los tokens y las utilidades de Tailwind.
+ * Permite escribir `bg-background`, `text-muted-foreground`, `border-border`, etc.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Ancho máximo del contenido — equivale a --maxw del sitio actual */
+  --spacing-content: 67.5rem; /* 1080px */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}

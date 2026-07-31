@@ -9,3 +9,8 @@ node_modules/
 portfolio.html
 status-panel.html
 enlazar-correo-gmail.md
+
+# Next.js / Payload
+.next/
+next-env.d.ts
+payload-types.ts
