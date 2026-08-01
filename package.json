@@ -6,10 +6,11 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "payload generate:types && next build",
+    "build": "payload generate:importmap && payload generate:types && next build",
     "start": "next start",
     "lint": "next lint",
     "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap",
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",
     "seed": "tsx scripts/seed.ts"
