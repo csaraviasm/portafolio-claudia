@@ -91,6 +91,14 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    // Crea y actualiza las tablas automáticamente a partir de las colecciones
+    // definidas arriba. Evita tener que ejecutar migraciones a mano cada vez
+    // que se añade un campo desde el código.
+    //
+    // Es la opción adecuada para un sitio gestionado por una sola persona.
+    // Si en el futuro el proyecto crece o lo edita más gente, conviene pasar
+    // a migraciones versionadas (`npm run migrate:create`) y poner esto en false.
+    push: true,
   }),
 
   // ── Almacenamiento de archivos ──────────────────────────────────────────
