@@ -183,6 +183,27 @@ const HABILIDADES = [
   { es: 'Pensamiento analítico', en: 'Analytical thinking', categoria: 'competencias' },
 ] as const
 
+/**
+ * Copia los identificadores de fila del contenido en español al que se va a
+ * guardar en inglés.
+ *
+ * En Payload, una lista repetible (estadísticas, botones, redes...) comparte
+ * las mismas filas entre idiomas: solo cambian los campos traducibles. Si al
+ * guardar el inglés se envían filas sin identificador, Payload las trata como
+ * filas nuevas, las recrea y el texto en español se pierde.
+ */
+function conservarFilas<T extends Record<string, unknown>>(
+  filasGuardadas: unknown,
+  filasNuevas: T[],
+): T[] {
+  const existentes = Array.isArray(filasGuardadas) ? filasGuardadas : []
+
+  return filasNuevas.map((fila, i) => {
+    const id = (existentes[i] as { id?: string } | undefined)?.id
+    return id ? ({ ...fila, id } as T) : fila
+  })
+}
+
 export async function cargarContenidoInicial(payload: Payload) {
   const resumen: string[] = []
 
@@ -202,17 +223,19 @@ export async function cargarContenidoInicial(payload: Payload) {
     } as never,
   })
 
+  const ajustesEs = await payload.findGlobal({ slug: 'ajustes', locale: 'es', depth: 0 })
+
   await payload.updateGlobal({
     slug: 'ajustes',
     locale: 'en',
     data: {
       textoPie: '© 2026 Claudia Saravia Matias — UX/UI Designer, Lima, Peru.',
-      navegacion: [
+      navegacion: conservarFilas(ajustesEs?.navegacion, [
         { etiqueta: 'Home', ruta: '/' },
         { etiqueta: 'Projects', ruta: '/proyectos' },
         { etiqueta: 'About', ruta: '/sobre-mi' },
         { etiqueta: 'Contact', ruta: '/contacto' },
-      ],
+      ]),
     } as never,
   })
   resumen.push('Ajustes del sitio')
@@ -256,6 +279,8 @@ export async function cargarContenidoInicial(payload: Payload) {
     } as never,
   })
 
+  const inicioEs = await payload.findGlobal({ slug: 'inicio', locale: 'es', depth: 0 })
+
   await payload.updateGlobal({
     slug: 'inicio',
     locale: 'en',
@@ -264,7 +289,9 @@ export async function cargarContenidoInicial(payload: Payload) {
       titulo: 'Product Designer focused on UX/UI',
       subtitulo:
         'I design user-centered digital products: research, information architecture, design systems and interfaces that convert.',
-      botones: [{ texto: 'View projects', enlace: '/proyectos', estilo: 'primario' }],
+      botones: conservarFilas(inicioEs?.botones, [
+        { texto: 'View projects', enlace: '/proyectos', estilo: 'primario' },
+      ]),
     } as never,
   })
   resumen.push('Página de inicio')
@@ -290,6 +317,8 @@ export async function cargarContenidoInicial(payload: Payload) {
     } as never,
   })
 
+  const sobreMiEs = await payload.findGlobal({ slug: 'sobre-mi', locale: 'es', depth: 0 })
+
   await payload.updateGlobal({
     slug: 'sobre-mi',
     locale: 'en',
@@ -301,12 +330,12 @@ export async function cargarContenidoInicial(payload: Payload) {
         'I currently design the Lotobola product from the ground up: experience, critical flows and the foundations of the design system.',
         'I work closely with engineering, business and data teams, turning needs into measurable design decisions.',
       ]),
-      estadisticas: [
+      estadisticas: conservarFilas(sobreMiEs?.estadisticas, [
         { valor: '54.54%', etiqueta: 'Reduction in student request waiting time' },
         { valor: '+73%', etiqueta: 'Increase in annual CES' },
         { valor: '33%', etiqueta: 'Improvement in operational efficiency' },
         { valor: '91', etiqueta: 'Types of processes structured' },
-      ],
+      ]),
     } as never,
   })
   resumen.push('Sobre mí')
@@ -376,11 +405,24 @@ export async function cargarContenidoInicial(payload: Payload) {
       })
     }
 
+    const guardadoEs = await payload.findByID({
+      collection: 'experiencia',
+      id,
+      locale: 'es',
+      depth: 0,
+    })
+
     await payload.update({
       collection: 'experiencia',
       id,
       locale: 'en',
-      data: { ...puesto.en, logros: puesto.en.logros.map((texto) => ({ texto })) } as never,
+      data: {
+        ...puesto.en,
+        logros: conservarFilas(
+          guardadoEs?.logros,
+          puesto.en.logros.map((texto) => ({ texto })),
+        ),
+      } as never,
     })
   }
   resumen.push(`Experiencia (${PUESTOS.length})`)
